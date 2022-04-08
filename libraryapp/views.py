@@ -3,6 +3,9 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.models import User,auth
 from django.views.decorators.cache import cache_control
 from django.contrib.auth import login,authenticate
+from django.shortcuts import (get_object_or_404,
+                              render,
+                              HttpResponseRedirect)
 from .models import stud_registration_tb,admin_registration_tb,books_tb
 
 # Create your views here.
@@ -13,9 +16,9 @@ def home(request):
 #Admin login
 def admin_login(request):
     if request.method=='POST':
-        username=request.POST.get['Username']
+        username=request.POST['username']
         # print(username)
-        password=request.POST.get['password']
+        password=request.POST['password']
         # print(password)
         chk=admin_registration_tb.objects.filter(username=username,password=password)
         print(chk)
@@ -49,7 +52,7 @@ def admin_reg(request):
             return redirect('/admin_login/')
     else:
         return render(request,'admin_reg.html')
-#Admin home page.use the url to see student home page and other operations
+#Admin home page.
 def admin_home(request):
     return render(request,'admin_home.html')
 
@@ -75,7 +78,7 @@ def stud_reg(request):
 #Student login
 def stud_login(request):
     if request.method=='POST':
-        username=request.POST['Username']
+        username=request.POST['username']
         # print(username)
         password=request.POST['password']
         # print(password)
@@ -85,7 +88,7 @@ def stud_login(request):
             for x in chk:
                 request.session['id']=x.id
                 print("-----------success----------")
-            return redirect('/stud_home.html/')
+            return render(request,'stud_home.html')
         else:
             return render(request,'stud_login.html')
     else:
@@ -93,7 +96,7 @@ def stud_login(request):
         return render(request,'stud_login.html')
 
 
-#student home page.use the url to see student home page
+#student home page.
 def stud_home(request):
     return render(request,'stud_home.html')
     
@@ -124,8 +127,13 @@ def admin_view_book(request):
 
 #Delete an entry
 def delete_book(request,id):
-    books_tb.objects.filter(id=id).delete
-    return redirect('/admin_home/')
+    books_tb.objects.filter(id=id).delete()
+    return redirect('/admin_view_book/')
+
+#Update an entry
+def update(request):
+     return render(request,'update.html')
+    
 
 #view all books added by admin in student dashboard
 def stud_view_book(request):

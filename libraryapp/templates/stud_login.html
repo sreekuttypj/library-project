@@ -113,8 +113,8 @@ body {
     <h1 class="heading">LOGIN</h1>
     <div class="form">
         
-      <form action="/stud_login/" method="POST" class="register-form">
-        {% csrf_token %}
+      <form  class="register-form">
+       
           
         <input type="text" placeholder="name"/>
         <input type="password"  placeholder="password"/>
@@ -122,7 +122,8 @@ body {
         <button>create</button>
         <p class="message">Already registered? <a href="#">Sign In</a></p>
       </form>
-      <form class="login-form">
+      <form action="/stud_login/" method="POST" class="login-form">
+        {% csrf_token %}
         <input type="text" name="username" placeholder="username"/>
         <input type="password" name="password" placeholder="password"/>
         <button class="btn_login"><a href="/stud_home/"></a>login</button>

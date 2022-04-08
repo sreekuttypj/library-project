@@ -15,6 +15,7 @@ urlpatterns = [
     path('admin_add_book/',views.admin_add_book),
     path('admin_view_book/',views.admin_view_book),
     path('delete_book/(?<id>)',views.delete_book),
+    path('update',views.update),
 
     path('stud_view_book/',views.stud_view_book),
 
